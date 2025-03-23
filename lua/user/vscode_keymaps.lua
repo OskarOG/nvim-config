@@ -9,6 +9,7 @@ keymap({ "n", "v" }, "<leader>i", "<cmd>lua require('vscode').action('editor.act
 keymap({ "n", "v" }, "<leader>f", "<cmd>lua require('vscode').action('editor.action.quickFix')<CR>")
 keymap({ "n", "v" }, "<leader>fd", "<cmd>lua require('vscode').action('editor.action.formatDocument')<CR>")
 keymap({ "n", "v" }, "<leader>c", "<cmd>lua require('vscode').action('editor.action.commentLine')<CR>")
+keymap({ "n", "v" }, "<leader>rd", "<cmd>lua require('vscode').action('workbench.action.debug.start')<CR>")
 
 -- dotnet
 keymap({ "n", "v" }, "<leader>db", "<cmd>lua require('vscode').action('csdevkit.buildSolution')<CR>")
