@@ -1,3 +1,4 @@
+-- TODO: Compare telescope vs snacks picker/explorer
 require("lazy").setup({
 	"tpope/vim-sleuth",
 	{
@@ -442,46 +443,20 @@ require("lazy").setup({
 		--    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 	},
 
-	-- File explorer
-	{
-		"nvim-neo-tree/neo-tree.nvim",
-		branch = "v3.x",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-tree/nvim-web-devicons",
-			"MunifTanjim/nui.nvim",
-		},
-		lazy = false,
-		---@module "neo-tree"
-		---@type neotree.Config?
+	{ -- Snacks
+		"folke/snacks.nvim",
 		opts = {
-			event_handlers = {
-				{
-					event = "file_open_requested",
-					handler = function()
-						require("neo-tree.command").execute({ action = "close" })
-					end,
-				},
+			picker = {},
+			explorer = {},
+		},
+		keys = {
+			{
+				"<leader>e",
+				function()
+					Snacks.explorer()
+				end,
+				desc = "File explorer",
 			},
 		},
-		-- cmd = "Neotree",
-		-- keys = {
-		-- {
-		-- "<leader>fe",
-		-- function()
-		-- require("neo-tree.command").execute({ toggle = true, dir = LazyVim.root() })
-		-- end,
-		-- desc = "Explorer NeoTree (Root Dir)",
-		-- },
-		-- {
-		-- "<leader>fE",
-		-- function()
-		-- require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() })
-		-- end,
-		-- desc = "Explorer NeoTree (cwd)",
-		-- },
-		-- { "<leader>e", "<leader>fe", desc = "Explorer Neotree (Root Dir)", remap = true },
-		-- { "<leader>E", "<leader>fE", desc = "Explorer Neotree (Root Dir)", remap = true },
-		-- },
 	},
 })
