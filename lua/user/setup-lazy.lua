@@ -457,6 +457,12 @@ require("lazy").setup({
 				end,
 				desc = "File explorer",
 			},
+			{
+				"<leader>gd",
+				function()
+					Snacks.picker.git_diff()
+				end,
+			},
 		},
 	},
 })
