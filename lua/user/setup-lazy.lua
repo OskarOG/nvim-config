@@ -52,16 +52,12 @@ require("lazy").setup({
 			pcall(require("telescope").load_extension, "ui-select")
 
 			local builtin = require("telescope.builtin")
-			-- vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
 			vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
 			vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
 			vim.keymap.set("n", "<leader>ss", builtin.builtin, { desc = "[S]earch [S]elect Telescope" })
-			-- vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
-			-- vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
+			vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
 			vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
-			-- vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
-			-- vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-			-- vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
+			vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
 
 			vim.keymap.set("n", "<leader>7", function()
 				builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
@@ -69,19 +65,6 @@ require("lazy").setup({
 					previewer = false,
 				}))
 			end, { desc = "[7] Fuzzily search in current buffer" })
-
-			--  See `:help telescope.builtin.live_grep()` for information about particular keys
-			-- vim.keymap.set("n", "<leader>s/", function()
-			-- builtin.live_grep({
-			-- grep_open_files = true,
-			-- prompt_title = "Live Grep in Open Files",
-			-- })
-			-- end, { desc = "[S]earch [/] in Open Files" })
-
-			-- Shortcut for searching your Neovim configuration files
-			-- vim.keymap.set("n", "<leader>sn", function()
-			-- builtin.find_files({ cwd = vim.fn.stdpath("config") })
-			-- end, { desc = "[S]earch [N]eovim files" })
 		end,
 	},
 
@@ -252,6 +235,17 @@ require("lazy").setup({
 			})
 		end,
 	},
+
+	-- LSP Rename
+	{
+		"smjonas/inc-rename.nvim",
+		config = function()
+			require("inc_rename").setup({})
+
+			vim.keymap.set("n", "<leader>rn", ":IncRename ", { desc = "[R]e[n]ame" })
+		end,
+	},
+
 	-- Autoformat
 	{
 		"stevearc/conform.nvim",
@@ -324,6 +318,9 @@ require("lazy").setup({
 				preset = "default",
 				-- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
 				--    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
+				["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
+				["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
+				["<CR>"] = { "accept", "fallback" },
 			},
 
 			appearance = {
@@ -331,7 +328,7 @@ require("lazy").setup({
 			},
 
 			completion = {
-				documentation = { auto_show = false, auto_show_delay_ms = 500 },
+				documentation = { auto_show = true, auto_show_delay_ms = 500 },
 			},
 
 			sources = {
@@ -349,18 +346,43 @@ require("lazy").setup({
 		},
 	},
 
-	{ -- Color scheme setup
-		"folke/tokyonight.nvim",
-		priority = 1000, -- Loads this before all other plugins
+	-- AI Completion
+	{
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		build = ":Copilot auth",
+		event = "InsertEnter",
 		config = function()
-			---@diagnostic disable-next-line: missing-fields
-			require("tokyonight").setup({
-				styles = {
-					comments = { italic = false },
+			require("copilot").setup({
+				-- debug = true,
+				suggestion = {
+					auto_trigger = true,
+					keymap = {
+						accept = "<C-e>",
+						next = "<C-]>",
+						previous = "<C-[>",
+						dismiss = "<C-x>",
+					},
+				},
+				panel = {
+					auto_refresh = true,
+					keymap = {
+						accept = "<C-e>",
+						jump_next = "<C-]>",
+						jump_prev = "<C-[>",
+					},
 				},
 			})
+		end,
+	},
 
-			vim.cmd.colorscheme("tokyonight-night")
+	-- Color scheme setup
+	{
+		"olimorris/onedarkpro.nvim",
+		priority = 1000, -- Ensure it loads first
+
+		config = function()
+			vim.cmd("colorscheme onedark")
 		end,
 	},
 
@@ -389,24 +411,54 @@ require("lazy").setup({
 			-- - sd'   - [S]urround [D]elete [']quotes
 			-- - sr)'  - [S]urround [R]eplace [)] [']
 			require("mini.surround").setup()
+		end,
+	},
 
-			-- Simple and easy statusline.
-			--  You could remove this setup call if you don't like it,
-			--  and try some other statusline plugin
-			local statusline = require("mini.statusline")
-			-- set use_icons to true if you have a Nerd Font
-			statusline.setup({ use_icons = vim.g.have_nerd_font })
-
-			-- You can configure sections in the statusline by overriding their
-			-- default behavior. For example, here we set the section for
-			-- cursor location to LINE:COLUMN
-			---@diagnostic disable-next-line: duplicate-set-field
-			statusline.section_location = function()
-				return "%2l:%-2v"
-			end
-
-			-- ... and there is more!
-			--  Check out: https://github.com/echasnovski/mini.nvim
+	{
+		"nvim-lualine/lualine.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			require("lualine").setup({
+				options = {
+					icons_enabled = true,
+					theme = "horizon",
+					component_separators = { left = "", right = "" },
+					section_separators = { left = "", right = "" },
+					disabled_filetypes = {
+						statusline = {},
+						winbar = {},
+					},
+					ignore_focus = {},
+					always_divide_middle = true,
+					always_show_tabline = true,
+					globalstatus = false,
+					refresh = {
+						statusline = 100,
+						tabline = 100,
+						winbar = 100,
+					},
+				},
+				sections = {
+					lualine_a = { "mode" },
+					lualine_b = { "branch", "diff", "diagnostics" },
+					lualine_c = { "filename" },
+					lualine_x = { "encoding", "fileformat", "filetype" },
+					lualine_y = { "progress" },
+					lualine_z = { "location" },
+				},
+				inactive_sections = {
+					lualine_a = {},
+					lualine_b = {},
+					lualine_c = { "filename" },
+					lualine_x = { "location" },
+					lualine_y = {},
+					lualine_z = {},
+				},
+				tabline = {},
+				winbar = {},
+				inactive_winbar = {},
+				extensions = {},
+			})
 		end,
 	},
 
@@ -439,30 +491,177 @@ require("lazy").setup({
 		-- with nvim-treesitter. You should go explore a few and see what interests you:
 		--
 		--    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-		--    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
 		--    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
 	},
 
-	{ -- Snacks
-		"folke/snacks.nvim",
-		opts = {
-			picker = {},
-			explorer = {},
+	{
+		"nvimdev/dashboard-nvim",
+		event = "VimEnter",
+		config = function()
+			require("dashboard").setup({})
+		end,
+		dependencies = { { "nvim-tree/nvim-web-devicons" } },
+	},
+
+	---@type LazySpec
+	{
+		"mikavilpas/yazi.nvim",
+		event = "VeryLazy",
+		dependencies = {
+			"folke/snacks.nvim",
 		},
 		keys = {
 			{
 				"<leader>e",
-				function()
-					Snacks.explorer()
-				end,
-				desc = "File explorer",
+				mode = { "n", "v" },
+				"<cmd>Yazi<cr>",
+				desc = "Open yazi at the current file",
 			},
 			{
-				"<leader>gd",
-				function()
-					Snacks.picker.git_diff()
-				end,
+				"<c-up>",
+				"<cmd>Yazi toggle<cr>",
+				desc = "Resume the last yazi session",
 			},
 		},
+		opts = {
+			open_for_directories = true,
+			keymaps = {
+				show_help = "<f1>",
+			},
+		},
+	},
+
+	{
+		"folke/trouble.nvim",
+		opts = {},
+		cmd = "Trouble",
+		keys = {
+			{
+				"<leader>xx",
+				"<cmd>Trouble diagnostics toggle<cr>",
+				desc = "Diagnostics (Trouble)",
+			},
+			{
+				"<leader>xX",
+				"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+				desc = "Buffer Diagnostics (Trouble)",
+			},
+			{
+				"<leader>cs",
+				"<cmd>Trouble symbols toggle focus=false<cr>",
+				desc = "Symbols (Trouble)",
+			},
+			{
+				"<leader>cl",
+				"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+				desc = "LSP Definitions / references / ... (Trouble)",
+			},
+			{
+				"<leader>xL",
+				"<cmd>Trouble loclist toggle<cr>",
+				desc = "Location List (Trouble)",
+			},
+			{
+				"<leader>xQ",
+				"<cmd>Trouble qflist toggle<cr>",
+				desc = "Quickfix List (Trouble)",
+			},
+		},
+	},
+
+	-- Harpoon
+	{
+		"theprimeagen/harpoon",
+		event = "VimEnter",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		keys = {
+			{
+				"<leader>ha",
+				function()
+					require("harpoon.mark").add_file()
+				end,
+				desc = "Add file to harpoon",
+			},
+			{
+				"<leader>hh",
+				function()
+					require("harpoon.ui").toggle_quick_menu()
+				end,
+				desc = "Toggle harpoon menu",
+			},
+			{
+				"<leader>h1",
+				function()
+					require("harpoon.ui").nav_file(1)
+				end,
+				desc = "Navigate to file 1 in harpoon",
+			},
+			{
+				"<leader>h2",
+				function()
+					require("harpoon.ui").nav_file(2)
+				end,
+				desc = "Navigate to file 2 in harpoon",
+			},
+			{
+				"<leader>h3",
+				function()
+					require("harpoon.ui").nav_file(3)
+				end,
+				desc = "Navigate to file 3 in harpoon",
+			},
+			{
+				"<leader>h4",
+				function()
+					require("harpoon.ui").nav_file(4)
+				end,
+				desc = "Navigate to file 4 in harpoon",
+			},
+			{
+				"<leader>h5",
+				function()
+					require("harpoon.ui").nav_file(5)
+				end,
+				desc = "Navigate to file 4 in harpoon",
+			},
+			{
+				"<leader>h6",
+				function()
+					require("harpoon.ui").nav_file(6)
+				end,
+				desc = "Navigate to file 4 in harpoon",
+			},
+			{
+				"<leader>h7",
+				function()
+					require("harpoon.ui").nav_file(7)
+				end,
+				desc = "Navigate to file 4 in harpoon",
+			},
+			{
+				"<leader>h8",
+				function()
+					require("harpoon.ui").nav_file(8)
+				end,
+				desc = "Navigate to file 4 in harpoon",
+			},
+			{
+				"<leader>h9",
+				function()
+					require("harpoon.ui").nav_file(9)
+				end,
+				desc = "Navigate to file 4 in harpoon",
+			},
+		},
+	},
+
+	-- Project manager
+	{
+		"ahmedkhalf/project.nvim",
+		dependencies = { "nvim-telescope/telescope.nvim" },
+		config = function()
+			require("project_nvim").setup()
+			require("telescope").load_extension("projects")
+		end,
 	},
 })
