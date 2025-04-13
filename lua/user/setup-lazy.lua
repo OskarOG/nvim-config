@@ -203,7 +203,7 @@ require("lazy").setup({
 
 			-- Enable LSPs
 			local servers = {
-				-- clangd = {},
+				clangd = {},
 				lua_ls = {
 					settings = {
 						Lua = {
@@ -470,6 +470,7 @@ require("lazy").setup({
 			ensure_installed = {
 				"bash",
 				"c",
+				"cpp",
 				"diff",
 				"html",
 				"lua",

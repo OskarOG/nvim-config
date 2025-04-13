@@ -2,7 +2,7 @@ File explorer - Fixed
 AI completion - Fixed
 harpoon - Fixed
 
-Diagnostic warning/errors
+Diagnostic warning/errors - Fixed 
     - Check diagnostics for full workspace folder
 
 search for string in project - Fixed
