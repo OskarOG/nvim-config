@@ -14,13 +14,13 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     end
 end
 
-vim.opt.rtp:preprend(lazypath)
+vim.opt.rtp:prepend(lazypath)
 
 
 require("lazy").setup({
     spec = {
         { import = "plugins" },
     },
-    install = { colorscheme = "habamax" },
-    checker = { enabled = true },
+    -- install = { colorscheme = "habamax" },
+    -- checker = { enabled = true },
 })

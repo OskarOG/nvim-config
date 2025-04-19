@@ -17,3 +17,4 @@ vue setup
 git diff
 file snippets
 
+Goto Symbol
