@@ -27,8 +27,8 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 
 -- Set list char in editor to display separation (TODO: Could hinder other symbol lines in editor)
-vim.opt.list = true
-vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+-- vim.opt.list = true
+-- vim.opt.listchars = { trail = "·", nbsp = "␣" }
 
 -- Preview substitutions live
 vim.opt.inccommand = "split"

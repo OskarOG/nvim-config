@@ -5,7 +5,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- Map comment line
-vim.keymap.set({"n", "v"}, "<Space>c", ":normal gcc<CR>", standard_opts)
+vim.keymap.set({ "n", "v" }, "<Space>c", ":normal gcc<CR>", standard_opts)
 
 -- Select line after indentation
 vim.keymap.set("v", "<", "<gv", standard_opts)

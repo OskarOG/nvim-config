@@ -29,9 +29,8 @@ return {
 		opts = {
 			keymap = {
 				preset = "none",
-
-				["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
-				["<C-e>"] = { "hide", "fallback" },
+				["<C-e>"] = { "show", "show_documentation", "hide_documentation" },
+				["<C-q>"] = { "hide", "fallback" },
 				["<CR>"] = { "accept", "fallback" },
 
 				-- ["<Tab>"] = { "snippet_forward", "fallback" },
@@ -59,7 +58,7 @@ return {
 
 			completion = {
 				documentation = { auto_show = true, auto_show_delay_ms = 500 },
-				ghost_text = { enabled = true, show_with_menu = true },
+				ghost_text = { enabled = false, show_with_menu = true },
 				menu = {
 					min_width = 50,
 				},
@@ -90,6 +89,42 @@ return {
 
 			-- Shows a signature help window while you type arguments for a function
 			signature = { enabled = true },
+
+			cmdline = {
+				enabled = true,
+				-- use 'inherit' to inherit mappings from top level `keymap` config
+				keymap = { preset = "cmdline" },
+				sources = function()
+					local type = vim.fn.getcmdtype()
+					-- Search forward and backward
+					if type == "/" or type == "?" then
+						return { "buffer" }
+					end
+					-- Commands
+					if type == ":" or type == "@" then
+						return { "cmdline" }
+					end
+					return {}
+				end,
+				completion = {
+					trigger = {
+						show_on_blocked_trigger_characters = {},
+						show_on_x_blocked_trigger_characters = {},
+					},
+					list = {
+						selection = {
+							-- When `true`, will automatically select the first item in the completion list
+							preselect = true,
+							-- When `true`, inserts the completion item automatically when selecting it
+							auto_insert = true,
+						},
+					},
+					-- Whether to automatically show the window when new completion items are available
+					menu = { auto_show = true },
+					-- Displays a preview of the selected item on the current line
+					ghost_text = { enabled = false },
+				},
+			},
 		},
 	},
 	{
