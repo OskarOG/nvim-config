@@ -9,6 +9,8 @@ AI completion -- Fixed
 C setup
 Debug
 
+find and replace
+ - grug-far.nvim
 
 .net setup
 vue setup
