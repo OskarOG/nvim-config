@@ -1,22 +1,37 @@
-require "user.bootstrap-lazy"
+vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
+vim.g.mapleader = " "
 
--- ---------------------------------------------------vim.opt-------------------------------------------------------
--- set global clipboard
--- TODO: Learn how to work with vim clipboard
-vim.opt.clipboard = "unnamed,unnamedplus"
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
+-- bootstrap lazy and all plugins
+local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 
-require "user.map_leader"
-require "user.standard_keymaps"
-
-if vim.g.vscode then
-    require "user.vscode_keymaps"
-else
-    -- neovim conf
+if not vim.uv.fs_stat(lazypath) then
+  local repo = "https://github.com/folke/lazy.nvim.git"
+  vim.fn.system { "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath }
 end
 
-require "user.setup-lazy"
+vim.opt.rtp:prepend(lazypath)
 
--- setup plugins
-require "user.setup-hop"
+local lazy_config = require "configs.lazy"
+
+-- load plugins
+require("lazy").setup({
+  {
+    "NvChad/NvChad",
+    lazy = false,
+    branch = "v2.5",
+    import = "nvchad.plugins",
+  },
+
+  { import = "plugins" },
+}, lazy_config)
+
+-- load theme
+dofile(vim.g.base46_cache .. "defaults")
+dofile(vim.g.base46_cache .. "statusline")
+
+require "options"
+require "nvchad.autocmds"
+
+vim.schedule(function()
+  require "mappings"
+end)
