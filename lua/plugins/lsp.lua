@@ -11,8 +11,7 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
-			-- Using opts is like calling require("mason").setup({})
-			{ "williamboman/mason.nvim", opts = {} },
+			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			-- Status updates for LSP
