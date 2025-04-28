@@ -186,6 +186,8 @@ return {
 				-- ts_ls = {},
 				--
 
+				-- checkmake LINTER FOR MAKEFILE
+
 				lua_ls = {
 					-- cmd = { ... },
 					-- filetypes = { ... },
@@ -218,6 +220,7 @@ return {
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
 				"stylua", -- Used to format Lua code
+				"shfmt", -- Used to format bash scripts
 			})
 
 			-- TODO: Implement DSP for Debug
