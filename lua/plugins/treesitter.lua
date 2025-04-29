@@ -6,8 +6,10 @@ return { -- Highlight, edit, and navigate code
 	opts = {
 		ensure_installed = {
 			"bash",
+			"bicep",
 			"c",
 			"cpp",
+			"c_sharp",
 			"diff",
 			"html",
 			"lua",

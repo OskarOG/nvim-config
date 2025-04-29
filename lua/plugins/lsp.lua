@@ -188,6 +188,16 @@ return {
 
 				-- checkmake LINTER FOR MAKEFILE
 
+				csharp_ls = {},
+				omnisharp = {
+					cmd = { "omnisharp", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
+				},
+				bicep = {},
+				html = {},
+				cssls = {},
+				jsonls = {},
+				dockerls = {},
+
 				lua_ls = {
 					-- cmd = { ... },
 					-- filetypes = { ... },
@@ -221,6 +231,9 @@ return {
 			vim.list_extend(ensure_installed, {
 				"stylua", -- Used to format Lua code
 				"shfmt", -- Used to format bash scripts
+				-- "xmlformatter",
+				-- "csharpier",
+				-- "prettier",
 			})
 
 			-- TODO: Implement DSP for Debug
