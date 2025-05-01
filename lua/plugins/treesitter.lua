@@ -9,6 +9,7 @@ return { -- Highlight, edit, and navigate code
 			"bicep",
 			"c",
 			"cpp",
+			"css",
 			"c_sharp",
 			"diff",
 			"html",

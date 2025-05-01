@@ -36,6 +36,7 @@ return {
 		"mfussenegger/nvim-dap",
 		depdendencies = {
 			"williamboman/mason.nvim",
+			"rcarriga/nvim-dap-ui",
 		},
 		keys = {
 			{
@@ -83,6 +84,7 @@ return {
 				handlers = {},
 				ensure_installed = {
 					"codelldb",
+					"netcoredbg",
 				},
 			})
 
@@ -94,6 +96,25 @@ return {
 					args = { "--port", "${port}" },
 					-- Potential fix for windows environment
 					-- detached = false,
+				},
+			}
+
+			local dotnet_debug_adapter = {
+				type = "executable",
+				command = vim.fn.stdpath("data") .. "/mason/bin/netcoredbg",
+				args = { "--interpreter=vscode" },
+			}
+			dap.adapters.coreclr = dotnet_debug_adapter
+			dap.adapters.netcoredbg = dotnet_debug_adapter
+
+			dap.configurations.cs = {
+				{
+					type = "coreclr",
+					name = "Launch .NET Core App",
+					request = "launch",
+					program = function()
+						return vim.fn.input("Path to DLL: ", vim.fn.getcwd() .. "/bin/Debug", "file")
+					end,
 				},
 			}
 

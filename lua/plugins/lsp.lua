@@ -188,7 +188,12 @@ return {
 
 				-- checkmake LINTER FOR MAKEFILE
 
-				csharp_ls = {},
+				csharp_ls = {
+					cmd_env = {
+						PATH = os.getenv("HOME") .. "/.dotnet/",
+						DOTNET_ROOT = os.getenv("HOME") .. "/.dotnet/",
+					},
+				},
 				omnisharp = {
 					cmd = { "omnisharp", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
 				},
