@@ -10,4 +10,5 @@ else
 	require("config.lazy")
 	require("config.nvim.opt_setup")
 	require("config.nvim.highlight_on_yank")
+	require("config.nvim.dotnet_debug")
 end

@@ -202,6 +202,7 @@ return {
 				cssls = {},
 				jsonls = {},
 				dockerls = {},
+				netcoredbg = {},
 
 				lua_ls = {
 					-- cmd = { ... },

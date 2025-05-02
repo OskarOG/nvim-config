@@ -47,6 +47,13 @@ return {
 				desc = "Debug: Start/Continue",
 			},
 			{
+				"<F8>",
+				function()
+					require("dap").close()
+				end,
+				desc = "Debug: Stop",
+			},
+			{
 				"<F10>",
 				function()
 					require("dap").step_into()
@@ -88,6 +95,7 @@ return {
 				},
 			})
 
+			-- C/C++
 			dap.adapters.codelldb = {
 				type = "server",
 				port = "${port}",
@@ -99,6 +107,7 @@ return {
 				},
 			}
 
+			-- .NET
 			local dotnet_debug_adapter = {
 				type = "executable",
 				command = vim.fn.stdpath("data") .. "/mason/bin/netcoredbg",
@@ -107,19 +116,10 @@ return {
 			dap.adapters.coreclr = dotnet_debug_adapter
 			dap.adapters.netcoredbg = dotnet_debug_adapter
 
-			dap.configurations.cs = {
-				{
-					type = "coreclr",
-					name = "Launch .NET Core App",
-					request = "launch",
-					program = function()
-						return vim.fn.input("Path to DLL: ", vim.fn.getcwd() .. "/bin/Debug", "file")
-					end,
-				},
-			}
-
+			-- Read launch.json and tasks.json files from .vscode folder
 			require("dap.ext.vscode").load_launchjs(nil, {
 				codelldb = { "c", "cpp" },
+				coreclr = { "cs" },
 			})
 
 			dap.listeners.after.event_initialized["dapui_config"] = dapui.open
