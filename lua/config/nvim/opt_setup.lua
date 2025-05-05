@@ -35,6 +35,7 @@ vim.opt.inccommand = "split"
 
 -- Show line
 vim.opt.cursorline = true
+vim.cmd([[highlight CursorLine guibg=#2c313c]])
 
 -- Set tab width
 vim.opt.tabstop = 4
