@@ -165,6 +165,27 @@ return {
 			end
 			local servers = {
 				clangd = {},
+				rust_analyzer = {},
+				-- gopls = {},
+				-- pyright = {},
+				-- rust_analyzer = {},
+				-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
+				--
+				-- Some languages (like typescript) have entire language plugins that can be useful:
+				--    https://github.com/pmizio/typescript-tools.nvim
+				--
+				-- But for many setups, the LSP (`ts_ls`) will work just fine
+				-- ts_ls = {},
+				--
+
+				-- checkmake LINTER FOR MAKEFILE
+
+				csharp_ls = {
+					cmd_env = {
+						PATH = os.getenv("HOME") .. "/.dotnet/",
+						DOTNET_ROOT = os.getenv("HOME") .. "/.dotnet/",
+					},
+				},
 				omnisharp = {
 					cmd = { "omnisharp", "--languageserver", "--hostPID", tostring(vim.fn.getpid()) },
 				},
