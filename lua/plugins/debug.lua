@@ -95,7 +95,7 @@ return {
 				},
 			})
 
-			-- C/C++
+			-- C/C++, Rust, Zig
 			dap.adapters.codelldb = {
 				type = "server",
 				port = "${port}",
