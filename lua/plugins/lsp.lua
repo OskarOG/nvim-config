@@ -195,7 +195,7 @@ return {
 				jsonls = {},
 				dockerls = {},
 				netcoredbg = {},
-
+				azure_pipelines_ls = {},
 				lua_ls = {
 					settings = {
 						Lua = {
