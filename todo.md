@@ -1,16 +1,18 @@
 Pretty section lines instead of >> -- Fixed
 C setup - Fixed?
 Debug - Fixed?
-
-project manager
+project manager - Fixed
 
 .net setup
- - run and debug app -- Fixed
  - easy dotnet
   - Build app
   - Run tests
+  - Blink
  - Check what is left after easy dotnet
   - potentially run and debug test
+ - Razor support
+
+Multi terminal support
 
 Trouble view diagnostics errors
 https://github.com/folke/trouble.nvim

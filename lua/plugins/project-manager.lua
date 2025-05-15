@@ -1,11 +1,21 @@
+local projects
+if require("easy-dotnet.extensions").isWindows() then
+	projects = {
+		-- "C:\\Users\\aoskgee\\AppData\\Local\\nvim",
+		"C:\\repos\\*",
+	}
+else
+	projects = {
+		"~/repos/*",
+		"~/projects/*",
+		"~/.config/nvim",
+	}
+end
+
 return {
 	"coffebar/neovim-project",
 	opts = {
-		projects = {
-			"~/repos/*",
-			"~/projects/*",
-			"~/.config/nvim",
-		},
+		projects = projects,
 		picker = {
 			type = "telescope",
 		},
@@ -23,7 +33,10 @@ return {
 	dependencies = {
 		{ "nvim-lua/plenary.nvim" },
 		{ "nvim-telescope/telescope.nvim" },
-		{ "Shatur/neovim-session-manager", opts = {} },
+		{
+			"Shatur/neovim-session-manager",
+			opts = {},
+		},
 	},
 	lazy = false,
 	priority = 100,
