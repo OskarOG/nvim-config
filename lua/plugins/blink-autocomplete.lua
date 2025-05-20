@@ -36,8 +36,8 @@ return {
 				-- ["<Tab>"] = { "snippet_forward", "fallback" },
 				-- ["<S-Tab>"] = { "snippet_backward", "fallback" },
 
-				["<Tab>"] = { "select_next", "fallback" },
-				["<S-Tab>"] = { "select_prev", "fallback" },
+				["<C-n>"] = { "select_next", "fallback" },
+				["<C-p>"] = { "select_prev", "fallback" },
 				-- ["<Up>"] = { "select_prev", "fallback" },
 				-- ["<Down>"] = { "select_next", "fallback" },
 
@@ -127,11 +127,11 @@ return {
 			},
 		},
 	},
-	{
-		"chrisgrieser/nvim-scissors",
-		dependencies = "nvim-telescope/telescope.nvim", -- if using telescope
-		opts = {
-			snippetDir = "path/to/your/snippetFolder",
-		},
-	},
+	-- {
+	-- "chrisgrieser/nvim-scissors",
+	-- dependencies = "nvim-telescope/telescope.nvim", -- if using telescope
+	-- opts = {
+	-- snippetDir = "path/to/your/snippetFolder",
+	-- },
+	-- },
 }

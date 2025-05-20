@@ -165,7 +165,11 @@ return {
 			end
 			local servers = {
 				clangd = {},
-				rust_analyzer = {},
+				rust_analyzer = {
+					inlayHints = {
+						enable = false,
+					},
+				},
 				-- gopls = {},
 				-- pyright = {},
 				-- rust_analyzer = {},

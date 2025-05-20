@@ -38,7 +38,7 @@ return {
 		{
 			"<leader>e",
 			mode = { "n", "v" },
-			"<cmd>Neotree toggle filesystem float<cr>",
+			"<cmd>Neotree toggle filesystem left<cr>",
 			desc = "Open neo tree filesystem",
 		},
 		{
