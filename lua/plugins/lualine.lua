@@ -2,6 +2,25 @@ return {
 	"nvim-lualine/lualine.nvim",
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 	config = function()
+		local function copilot_status()
+			local status = vim.fn["copilot#status"]()
+			local icon = " "
+
+			if status.status == "Normal" then
+				return icon .. "Ready"
+			elseif status.status == "InProgress" then
+				return icon .. "Typing…"
+			elseif status.status == "Warning" then
+				return icon .. "⚠️"
+			elseif status.status == "Error" then
+				return icon .. "✖ Error"
+			elseif status.status == "Disabled" then
+				return icon .. "Off"
+			else
+				return ""
+			end
+		end
+
 		require("lualine").setup({
 			options = {
 				icons_enabled = true,
@@ -25,7 +44,7 @@ return {
 			sections = {
 				lualine_a = { "mode" },
 				lualine_b = { "branch", "diff", "diagnostics" },
-				lualine_c = { "filename" },
+				lualine_c = { "filename", copilot_status },
 				lualine_x = { "encoding", "fileformat", "filetype" },
 				lualine_y = { "progress" },
 				lualine_z = { "location" },
