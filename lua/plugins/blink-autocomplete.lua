@@ -129,7 +129,6 @@ return {
 	},
 	{
 		"chrisgrieser/nvim-scissors",
-		commit = "855ce6b",
 		dependencies = "nvim-telescope/telescope.nvim", -- if using telescope
 		opts = {
 			snippetDir = "path/to/your/snippetFolder",
