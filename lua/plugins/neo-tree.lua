@@ -10,6 +10,11 @@ return {
 	---@type neotree.Config?
 	opts = {
 		filesystem = {
+			filtered_items = {
+				visible = true,
+				hide_dotfiles = false,
+				hide_gitignored = true,
+			},
 			window = {
 				mappings = {
 					["P"] = "easy_dotnet_project",

@@ -1,5 +1,32 @@
 local standard_opts = { noremap = true, silent = true }
 
+vim.g.clipboard = {
+	name = "WindowsClipboard",
+	copy = {
+		["+"] = { "clip.exe" },
+		["*"] = { "clip.exe" },
+	},
+	paste = {
+		["+"] = {
+			"powershell.exe",
+			"-NoLogo",
+			"-NoProfile",
+			"-Command",
+			'[Console]::Out.Write((Get-Clipboard -Raw).ToString().Replace("`r", ""))',
+		},
+		["*"] = {
+			"powershell.exe",
+			"-NoLogo",
+			"-NoProfile",
+			"-Command",
+			'[Console]::Out.Write((Get-Clipboard -Raw).ToString().Replace("`r", ""))',
+		},
+	},
+	cache_enabled = 0,
+}
+
+vim.opt.clipboard = "unnamedplus"
+
 vim.keymap.set("n", "<Space>", "", standard_opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "

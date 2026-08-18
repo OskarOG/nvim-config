@@ -5,6 +5,7 @@ return {
 			"~/repos/*",
 			"~/projects/*",
 			"~/.config/nvim",
+			"/mnt/c/Users/aoskgee/OneDrive - Tryg/Notes",
 		},
 		picker = {
 			type = "telescope",
